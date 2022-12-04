@@ -174,9 +174,11 @@ Write a function called whatDayIsIt that should return the current day of the we
 */
 console.log("-------------------exercise 7-----------------")
 function whatDayIsIt(){
+    let days=["Sunday","Monday","Tueday","Wednesday","Thursday","Friday","Saturday"]
  let d = new Date()
  let day = d.getDay()
- return day
+
+  return days[day]
 }
 console.log(whatDayIsIt())
 /* EXERCISE 8
@@ -223,16 +225,10 @@ Write a function called howManyDays which receives a date as a parameter and ret
 
 */
 console.log("----------------------exercise 9--------------------")
-function howManyDays(dates){
-    let date= new Date()
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let currentDate=`${day}-${month}-${year}`
-  
-
+function howManyDays(date){
+   
 }
-console.log(howManyDays("1-12-2022"))
+console.log(howManyDays())
 /* EXERCISE 10
 
 Write a function called isTodayMyBirthday which should return true if today’s your birthday, false otherwise.
@@ -267,21 +263,18 @@ and returns the given object after deleting its property named as the given stri
 */
 console.log("----------------------exercise 11--------------------")
 
+let toBeDeleted={
+    first:"first",
+    second:"second",
+    third:"third"
+}
+function deleteProp(object,string){
 
-function deleteProp(object,_string){
-
-    object={
-        name:"name",
-        surname:"surname",
-        age:"age",
-        Boolean:"true"
-     }
-    
-    delete object._string
+delete object[string]
  
 return object
 }
-console.log(deleteProp("object","name"))
+console.log(deleteProp(toBeDeleted,"second"))
 /* EXERCISE 12
 
 Write a function called oldestMovie which finds the oldest movie in the provided movies array.
@@ -516,9 +509,10 @@ const movies = [
     ];
 console.log("----------------------exercise 12--------------------")
 function oldestMovie(){
- oldest=movies[0]["Year"]
+ oldest=movies[0]
+ let releaseDate=parseInt(oldest.Year)
  for(i=0;i<movies.length;i++){
-    if(oldest>movies[i]["Year"]){
+    if(parseInt(movies[i].Year)<releaseDate){
         oldest=movies[i]
     }
  }
@@ -571,10 +565,15 @@ Write a function called getMovieById which receives an id as a parameter and ret
 
 */
 console.log("----------------------exercise 16--------------------")
+let id="tt4154796"
 function getMovieById(id){
-
+ for(i=0;i< movies.length;i++){
+    if(id===movies[i].imdbID){
+        return movies[i]
+    }
+ }
 }
-console.log(getMovieById("tt4154796"))
+console.log(getMovieById(id))
 /* EXERCISE 17
 
 Write a function called sumAllTheYears which returns the sum of all the years in which the movies in the provided movies array have been produced.
@@ -604,16 +603,16 @@ Write a function called searchByTitle which receives a string as a parameter and
 */
 console.log("----------------------exercise 18--------------------")
 function searchByTitle(string){
-  
+  let included=[]
   for(i=0;i<movies.length;i++){
     if(movies[i]["Title"].includes(string)){
-        return movies[i]
-    }else{
-        return("No movies found")
+        included.push(movies[i])
     }
+// included.push(movies[i]["Title"].includes(string))
   }
+return included
 }
-console.log(searchByTitle("Avengers: Endgame"))
+console.log(searchByTitle("Avengers"))
 /* EXERCISE 19
 
 Write a function called searchAndDivide which receives a string as a parameter and returns an object;
@@ -626,15 +625,22 @@ and another array unmatch with all the remaining ones.
 console.log("----------------------exercise 19--------------------")
 
 function searchAndDivide(string){
-
-    let object = {
-        match:[searchByTitle(string)],
-        unmatch:[searchByNotTitle(string)]
+ let object={
+    match:[],
+    unmatch:[]
+ }
+ for(i=0;i<movies.length;i++){
+    if(movies[i]["Title"].includes(string)){
+        object.match.push(movies[i])
+    }else{
+        object.unmatch.push(movies[i])  
     }
 
-    return object;
+   
 }
-
+return object;
+}
+console.log(searchAndDivide("The"))
 /* EXERCISE 20
 
 Write a function called "removeIndex" which receives a number as a parameter and returns the provided movies array without the element in the given position.
@@ -668,9 +674,19 @@ halfTree(3)
 */
 console.log("----------------------exercise 21--------------------")
 function halfTree(n){
+    for( i=0; i<=n; i++){
+        let star = ""
+        for(j=0; j<=i; j++) {
+            star += "*"
+        }
+     console.log(star)
+
+      }
 
 }
 
+
+console.log(halfTree(3))
 /* EXERCISE 22
 
 Create a function called "tree" which receives a number as a parameter and builds an "*" tree with the given height.
@@ -688,8 +704,21 @@ tree(3)
 */
 console.log("----------------------exercise 22--------------------")
 function tree(n){
-
+    let star
+    for( i=0; i<=n; i++){
+        let star = ""
+       for(k = 1; k <= n - i; k++){
+         star += " "
+        }
+        for(j=0; j<=i; j++) {
+           star += " *"
+            
+        }
+        console.log(star)
+      }
+     
 }
+console.log(tree(5))
 /* EXERCISE 23
 
 Create a function called "isItPrime" that receives a number as a parameter and returns true if the given number is a prime number.
@@ -705,10 +734,15 @@ Commit and push the code to your personal GitHub repository; then post the link 
 /* This movies array is used throughout the exercises. You’re not supposed to alter it. */
 console.log("----------------------exercise 23--------------------")
 function isItPrime(n){
-if(n%2===0){
+if(n<2){
     return "This is not a prime number"
-}else{
+}else { 
+    for(i=2;i<n;i++){
+     if(n%i===0){
+        return "This is not a prime number"
+     }
+    }
     return "this is a prime number"
 }
 }
-console.log(isItPrime(4))
+console.log(isItPrime(5))
